@@ -6,7 +6,9 @@
       "Bash(export PATH=\"$PATH:/c/Users/wuyin/AppData/Roaming/npm\")",
       "Bash(pnpm --version)",
       "Read(//tmp/**)",
-      "Bash(pnpm add *)"
+      "Bash(pnpm add *)",
+      "Bash(pnpm tsc *)",
+      "Bash(pnpm build *)"
     ],
     "additionalDirectories": [
       "e:\\GitProject\\Agentic-systems-demo\\.claude"
