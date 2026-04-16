@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm create *)",
+      "Bash(npm install *)",
+      "Bash(export PATH=\"$PATH:/c/Users/wuyin/AppData/Roaming/npm\")",
+      "Bash(pnpm --version)",
+      "Read(//tmp/**)",
+      "Bash(pnpm add *)"
+    ],
+    "additionalDirectories": [
+      "e:\\GitProject\\Agentic-systems-demo\\.claude"
+    ]
+  }
+}
