@@ -9,6 +9,7 @@ const NAV = [
   { href: '/concurrent', label: 'Concurrent', icon: '⫸', group: 'Multi-Agent' },
   { href: '/group-chat', label: 'Group Chat', icon: '💬', group: 'Multi-Agent' },
   { href: '/supervisor', label: 'Supervisor', icon: '👑', group: 'Multi-Agent' },
+  { href: '/rag', label: 'Medicine Checker', icon: '💊', group: 'RAG' },
 ];
 
 function NavItem({ href, label, icon }: { href: string; label: string; icon: string }) {
@@ -30,6 +31,7 @@ function NavItem({ href, label, icon }: { href: string; label: string; icon: str
 export function Sidebar() {
   const singleAgent = NAV.filter(n => n.group === 'Single Agent');
   const multiAgent = NAV.filter(n => n.group === 'Multi-Agent');
+  const rag = NAV.filter(n => n.group === 'RAG');
   return (
     <div className="w-56 flex-shrink-0 bg-zinc-900 border-r border-zinc-800 flex flex-col h-screen">
       <div className="px-4 py-5 border-b border-zinc-800">
@@ -46,6 +48,10 @@ export function Sidebar() {
           Multi-Agent
         </div>
         {multiAgent.map(n => <NavItem key={n.href} {...n} />)}
+        <div className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest px-3 pt-4 pb-1">
+          RAG
+        </div>
+        {rag.map(n => <NavItem key={n.href} {...n} />)}
       </nav>
     </div>
   );
