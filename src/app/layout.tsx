@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-zinc-950 text-zinc-100 flex h-screen overflow-hidden`}>
+      <body suppressHydrationWarning className={`${inter.className} bg-zinc-950 text-zinc-100 flex h-screen overflow-hidden`}>
         <Sidebar />
         <main className="flex-1 overflow-hidden">{children}</main>
       </body>

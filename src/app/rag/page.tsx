@@ -17,8 +17,8 @@ const makeEdges = (): Edge[] => [
   { id: 'e1', source: 'query-parser', target: 'retriever' },
   { id: 'e2', source: 'retriever', target: 'reranker' },
   { id: 'e3', source: 'reranker', target: 'generator' },
-  { id: 'e4', source: 'retriever', target: 'vector-db', label: 'query', style: { stroke: '#8b5cf6', strokeDasharray: '4 3' }, markerEnd: { type: MarkerType.ArrowClosed } },
-  { id: 'e5', source: 'vector-db', target: 'retriever', label: 'results', style: { stroke: '#8b5cf6', strokeDasharray: '4 3' }, markerEnd: { type: MarkerType.ArrowClosed } },
+  { id: 'e4', source: 'retriever', target: 'vector-db', style: { stroke: '#8b5cf6', strokeDasharray: '4 3' }, markerEnd: { type: MarkerType.ArrowClosed } },
+  { id: 'e5', source: 'vector-db', target: 'retriever', style: { stroke: '#8b5cf6', strokeDasharray: '4 3' }, markerEnd: { type: MarkerType.ArrowClosed } },
 ];
 
 export default function RagPage() {
