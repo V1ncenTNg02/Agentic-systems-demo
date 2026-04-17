@@ -8,7 +8,14 @@
       "Read(//tmp/**)",
       "Bash(pnpm add *)",
       "Bash(pnpm tsc *)",
-      "Bash(pnpm build *)"
+      "Bash(pnpm build *)",
+      "Bash(ls -d .worktrees)",
+      "Bash(ls -d worktrees)",
+      "Bash(pnpm install *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(pnpm lint *)",
+      "Bash(git stash *)"
     ],
     "additionalDirectories": [
       "e:\\GitProject\\Agentic-systems-demo\\.claude"
