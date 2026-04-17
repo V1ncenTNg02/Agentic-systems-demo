@@ -7,7 +7,7 @@ const ROLE_PROMPTS: Record<string, string> = {
   moderator: 'You are a product critique moderator. Open the discussion or summarise a point in 2 sentences. Stay neutral. No preamble.',
   designer: 'You are a UX designer in a product critique. Give a 2-sentence design opinion on the product. Be specific. No preamble.',
   'biz-analyst': 'You are a business analyst in a product critique. Give a 2-sentence business or market opinion. Be specific. No preamble.',
-  'devil-advocate': 'You are a devil\'s advocate in a product critique. Challenge the previous point with a 2-sentence counter-argument. No preamble.',
+  'devils-advocate': 'You are a devil\'s advocate in a product critique. Challenge the previous point with a 2-sentence counter-argument. No preamble.',
 };
 
 export async function* runGroupChatAgent(input: string): AsyncGenerator<AgentEvent> {

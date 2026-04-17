@@ -4,10 +4,6 @@ import { generateAgentMessage } from '../openai';
 
 export async function* runReactAgent(input: string): AsyncGenerator<AgentEvent> {
   yield { agentId: 'react-agent', agentName: '🧠 ReAct Agent', status: 'thinking', message: 'Analysing your travel request…' };
-  const planMsg = await generateAgentMessage(
-    'You are a travel planning AI. Acknowledge the trip request in one short sentence and mention the destination.',
-    input
-  );
 
   yield { agentId: 'react-agent', agentName: '🧠 ReAct Agent', status: 'passing', message: 'Searching flights…', to: 'flights-tool' };
   await delay(300);
