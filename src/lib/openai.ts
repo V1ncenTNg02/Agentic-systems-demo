@@ -21,7 +21,8 @@ export async function generateAgentMessage(system: string, user: string): Promis
       ],
     });
     return res.choices[0]?.message?.content?.trim() ?? 'No response generated.';
-  } catch {
+  } catch (err) {
+    console.error('[openai] generateAgentMessage failed:', err);
     return 'Error generating response.';
   }
 }
