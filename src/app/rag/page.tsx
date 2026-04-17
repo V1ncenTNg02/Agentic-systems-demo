@@ -1,21 +1,24 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useNodesState, useEdgesState, type Node, type Edge } from 'reactflow';
+import { useNodesState, useEdgesState, MarkerType, type Node, type Edge } from 'reactflow';
 import { useAgentStream } from '@/lib/use-agent-stream';
 import { AgentDiagram } from '@/components/diagram/AgentDiagram';
 import { PatternPage } from '@/components/patterns/PatternPage';
 
 const makeNodes = (): Node[] => [
-  { id: 'query-parser', type: 'agentNode', position: { x: 0, y: 80 }, data: { label: 'Query Parser', icon: '🔍', color: '#6366f1', status: 'idle' } },
-  { id: 'retriever', type: 'agentNode', position: { x: 180, y: 80 }, data: { label: 'Retriever', icon: '📚', color: '#10b981', status: 'idle' } },
-  { id: 'reranker', type: 'agentNode', position: { x: 360, y: 80 }, data: { label: 'Reranker', icon: '⚖️', color: '#f59e0b', status: 'idle' } },
-  { id: 'generator', type: 'outputNode', position: { x: 540, y: 80 }, data: { label: 'Generator', icon: '🤖', status: 'idle' } },
+  { id: 'query-parser', type: 'agentNode', position: { x: 0, y: 60 }, data: { label: 'Query Parser', icon: '🔍', color: '#6366f1', status: 'idle' } },
+  { id: 'retriever', type: 'agentNode', position: { x: 180, y: 60 }, data: { label: 'Retriever', icon: '📚', color: '#10b981', status: 'idle' } },
+  { id: 'reranker', type: 'agentNode', position: { x: 360, y: 60 }, data: { label: 'Reranker', icon: '⚖️', color: '#f59e0b', status: 'idle' } },
+  { id: 'generator', type: 'outputNode', position: { x: 540, y: 60 }, data: { label: 'Generator', icon: '🤖', status: 'idle' } },
+  { id: 'vector-db', type: 'agentNode', position: { x: 180, y: 230 }, data: { label: 'Vector DB', icon: '🗄️', color: '#8b5cf6', status: 'idle', message: '18 medicine chunks · keyword index' } },
 ];
 
 const makeEdges = (): Edge[] => [
   { id: 'e1', source: 'query-parser', target: 'retriever' },
   { id: 'e2', source: 'retriever', target: 'reranker' },
   { id: 'e3', source: 'reranker', target: 'generator' },
+  { id: 'e4', source: 'retriever', target: 'vector-db', label: 'query', style: { stroke: '#8b5cf6', strokeDasharray: '4 3' }, markerEnd: { type: MarkerType.ArrowClosed } },
+  { id: 'e5', source: 'vector-db', target: 'retriever', label: 'results', style: { stroke: '#8b5cf6', strokeDasharray: '4 3' }, markerEnd: { type: MarkerType.ArrowClosed } },
 ];
 
 export default function RagPage() {
@@ -30,14 +33,29 @@ export default function RagPage() {
     setNodes(nds => nds.map(n =>
       n.id === event.agentId ? { ...n, data: { ...n.data, status: event.status, message: event.message } } : n
     ));
+    if (event.agentId === 'retriever' && event.status === 'thinking') {
+      setEdges(eds => eds.map(e => ({
+        ...e,
+        animated: e.id === 'e4' || e.id === 'e5',
+        style: (e.id === 'e4' || e.id === 'e5') ? { stroke: '#8b5cf6', strokeDasharray: '4 3', strokeWidth: 2 } : e.style,
+      })));
+      setTimeout(() => setEdges(eds => eds.map(e =>
+        e.id === 'e4' || e.id === 'e5' ? { ...e, animated: false, style: { stroke: '#8b5cf6', strokeDasharray: '4 3' } } : e
+      )), 1500);
+    }
     if (event.to) {
       setEdges(eds => eds.map(e => ({
         ...e,
         animated: (e.source === event.agentId && e.target === event.to) ||
                   (e.source === event.to && e.target === event.agentId),
-        style: { stroke: (e.source === event.agentId && e.target === event.to) ? '#6366f1' : '#52525b', strokeWidth: 1.5 },
+        style: (e.id === 'e4' || e.id === 'e5')
+          ? { stroke: '#8b5cf6', strokeDasharray: '4 3', strokeWidth: 1.5 }
+          : { stroke: (e.source === event.agentId && e.target === event.to) ? '#6366f1' : '#52525b', strokeWidth: 1.5 },
       })));
-      setTimeout(() => setEdges(eds => eds.map(e => ({ ...e, animated: false, style: { stroke: '#52525b', strokeWidth: 1.5 } }))), 1500);
+      setTimeout(() => setEdges(eds => eds.map(e => (e.id === 'e4' || e.id === 'e5')
+        ? { ...e, animated: false, style: { stroke: '#8b5cf6', strokeDasharray: '4 3' } }
+        : { ...e, animated: false, style: { stroke: '#52525b', strokeWidth: 1.5 } }
+      )), 1500);
     }
     if (event.status === 'done' && event.agentId === 'generator') {
       setOutput(event.message);
